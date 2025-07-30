@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Memory</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveMemory()" [strong]="true">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="saveMemory()">
+    <ion-list>
+      <!-- Title -->
+      <ion-item>
+        <ion-input
+          label="Title"
+          labelPlacement="floating"
+          [(ngModel)]="memory.title"
+          name="title"
+          placeholder="Where did you go?"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <!-- Description -->
+      <ion-item>
+        <ion-textarea
+          label="Description"
+          labelPlacement="floating"
+          [(ngModel)]="memory.description"
+          name="description"
+          placeholder="Share your experience...">
+        </ion-textarea>
+      </ion-item>
+
+      <!-- Photo -->
+      <ion-item button (click)="takePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        <ion-label>Add Photo</ion-label>
+        <ion-badge color="primary" slot="end" *ngIf="memory.photo">✓</ion-badge>
+      </ion-item>
+
+      <!-- Location -->
+      <ion-item button (click)="getLocation()">
+        <ion-icon name="location" slot="start"></ion-icon>
+        <ion-label>Get Location</ion-label>
+        <ion-badge color="primary" slot="end" *ngIf="memory.location">✓</ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <!-- Photo Preview -->
+    <div class="ion-padding" *ngIf="memory.photo">
+      <ion-img [src]="memory.photo" class="photo-preview"></ion-img>
+    </div>
+
+    <!-- Location Preview -->
+    <ion-card *ngIf="memory.location">
+      <ion-card-header>
+        <ion-card-title>Location Saved</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Latitude: {{ memory.location.lat | number:'1.4-4' }}<br>
+        Longitude: {{ memory.location.lng | number:'1.4-4' }}
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
